@@ -1,0 +1,47 @@
+# FastAPI and web framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Google Cloud services
+google-cloud-aiplatform==1.38.1
+google-cloud-storage==2.10.0
+google-cloud-bigquery==3.13.0
+google-generativeai==0.3.2
+
+# Document processing
+PyPDF2==3.0.1
+pdfplumber==0.10.3
+python-docx==1.1.0
+Pillow==10.1.0
+pytesseract==0.3.10
+
+# OCR and image processing
+opencv-python==4.8.1.78
+google-cloud-vision==3.4.4
+
+# Data processing and validation
+pydantic==2.5.0
+pandas==2.1.4
+numpy==1.25.2
+
+# Authentication and security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.0
+email-validator==2.1.0
+
+# Database and storage
+sqlalchemy==2.0.23
+alembic==1.13.1
+
+# Utilities
+requests==2.31.0
+aiofiles==23.2.1
+python-dateutil==2.8.2
+
+# Development and testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.11.0
+flake8==6.1.0

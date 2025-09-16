@@ -1,0 +1,47 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/legal-ai-backend:$COMMIT_SHA', './backend']
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/legal-ai-backend:$COMMIT_SHA']
+
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'legal-ai-backend'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/legal-ai-backend:$COMMIT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--memory'
+      - '2Gi'
+      - '--cpu'
+      - '2'
+      - '--max-instances'
+      - '10'
+      - '--set-env-vars'
+      - 'GOOGLE_CLOUD_PROJECT_ID=$PROJECT_ID,GEMINI_API_KEY=$_GEMINI_API_KEY,CLOUD_STORAGE_BUCKET=$_CLOUD_STORAGE_BUCKET,BIGQUERY_DATASET=$_BIGQUERY_DATASET'
+
+# Store images in Google Container Registry
+images:
+  - 'gcr.io/$PROJECT_ID/legal-ai-backend:$COMMIT_SHA'
+
+# Build configuration
+options:
+  machineType: 'E2_HIGHCPU_8'
+  diskSizeGb: 100
+  logging: CLOUD_LOGGING_ONLY
+
+# Substitution variables
+substitutions:
+  _GEMINI_API_KEY: 'your-gemini-api-key'
+  _CLOUD_STORAGE_BUCKET: 'your-bucket-name'
+  _BIGQUERY_DATASET: 'legal_documents'
